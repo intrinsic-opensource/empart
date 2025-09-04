@@ -13,7 +13,7 @@ import pytest
 
 from .decompose import run_decompose_from_args
 
-TEST_GLB = Path(__file__).resolve().parents[2] / "test" / "data" / "models" / "motor.glb"
+TEST_GLB = Path(__file__).resolve().parents[2] / "testing" / "data" / "models" / "motor.glb"
 
 
 def _extract_volumes(result) -> list[float]:
