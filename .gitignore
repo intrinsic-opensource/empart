@@ -2,3 +2,6 @@ node_modules
 experiments_log
 __pycache__/
 *.py[cod]
+
+# Auto-populated models dir
+tools/interactive-viewer/public/models/*
