@@ -50,13 +50,15 @@ Ensure you have these installed:
 
 4. **Install Blender (optional for watertight mesh inputs):**    
 
-    Note: If you are expecting to simplify meshes that are not watertight, our tool requires blender to compute mesh intersections.
+    Note: If you are expecting to simplify meshes that are not watertight*, our tool requires blender to compute mesh intersections.
     Install blender from `https://www.blender.org/download/`
     ```
     tar -xf blender-4.5.1-linux-x64.tar.xz
     export PATH="/home/youruser/Downloads/blender-4.5.1-linux-x64:$PATH"
     source ~/.bashrc
     ```
+
+    *A watertight triangle mesh is a closed 2-manifold or equivalently, every edge is shared by two faces.
 
 -----
 
