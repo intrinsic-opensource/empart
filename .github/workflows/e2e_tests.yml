@@ -1,0 +1,82 @@
+name: E2E Tests
+
+on:
+  push:
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+      # This step is global for the job, no changes needed here.
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          # This cache now correctly points to your subdirectory's package-lock.json
+          cache: 'npm'
+          cache-dependency-path: tools/interactive-viewer/package-lock.json
+
+      # This cache key also needs to point to the correct lock file.
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('tools/interactive-viewer/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+
+      # All subsequent steps now run inside the correct folder.
+      - name: Install dependencies
+        run: npm ci
+        working-directory: ./tools/interactive-viewer
+
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          # This action automatically caches pip packages for faster builds
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          playwright install
+      - name: Start Server, Wait, Test, and Stop
+        env:
+          PORT: 5004
+        working-directory: ./tools/interactive-viewer
+        run: |
+          # Start the server in the background
+          npm start &
+          SERVER_PID=$!
+          
+          # Wait for the server to be ready (up to 60 seconds)
+          npx wait-on http://localhost:5004 --timeout 60000
+
+          # Run tests and capture the exit code
+          pytest ../../tests/; test_exit_code=$?
+
+          # Stop the server
+          kill $SERVER_PID
+
+          # Exit with the original test exit code
+          exit $test_exit_code
+
+      # The report path must also be updated.
+      - name: Upload report
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: tools/interactive-viewer/playwright-report/
+          retention-days: 30
