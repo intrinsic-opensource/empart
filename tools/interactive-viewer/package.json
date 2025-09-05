@@ -1,0 +1,33 @@
+{
+  "name": "react-three-fiber-boilerplate",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "main": "src/index.jsx",
+  "scripts": {
+    "copy-models": "mkdir -p public/models && cp -n ../../testing/data/models/motor.glb public/models/",
+    "prestart": "npm run copy-models",
+    "prebuild": "npm run copy-models",
+   "start": "concurrently \"r3f-pack start\" \"node src/server/server.js --port 5005 \"",
+    "build": "r3f-pack build"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.53.1",
+    "@react-three/drei": "^10.3.0",
+    "@react-three/fiber": "^9.1.2",
+    "concurrently": "^9.2.0",
+    "globals": "^16.2.0",
+    "r3f-pack": "^3.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "three": "^0.174.0"
+  },
+  "dependencies": {
+    "buffer": "^6.0.3",
+    "convex-hull": "^1.0.3",
+    "cors": "^2.8.5",
+    "jszip": "^3.10.1",
+    "lucide-react": "^0.511.0",
+    "pako": "^2.1.0"
+  }
+}
