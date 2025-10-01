@@ -5,6 +5,8 @@
 This research project offers a web-based interactive tool for simplifying your meshes into convex shapes with varying error tolerances. 
 The project is particularly aimed at finetuning collision geometry for physics simulation and robotics algorithms.
 
+Read our pre-print paper explaining Empart on [arXiv](https://www.arxiv.org/pdf/2509.22847).
+
 -----
 
 ## Getting Started
@@ -78,6 +80,22 @@ Then, run the tests using pytest:
 ```bash
 pytest
 ```
+-----
+## Citing Empart
+
+Please include this bibtex entry when citing Empart:
+```
+@misc{vu2025empartinteractiveconvexdecomposition,
+      title={Empart: Interactive Convex Decomposition for Converting Meshes to Parts}, 
+      author={Brandon Vu and Shameek Ganguly and Pushkar Joshi},
+      year={2025},
+      eprint={2509.22847},
+      archivePrefix={arXiv},
+      primaryClass={cs.RO},
+      url={https://arxiv.org/abs/2509.22847}, 
+}
+```
+
 -----
 
 ## Acknowledgements
